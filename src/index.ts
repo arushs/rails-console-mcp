@@ -142,7 +142,7 @@ export class RailsConsole {
       '-c', this.config.kubeContainer,
       podName,
       '--',
-      'bundle', 'exec', 'rails', 'console', '--', '--nomultiline'
+      'bundle', 'exec', 'rails', 'console'
     ]];
   }
 
