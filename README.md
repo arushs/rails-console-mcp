@@ -2,7 +2,7 @@
 
 An MCP server that lets Claude Code execute Ruby in your Rails console.
 
-Supports both **local Docker** and **remote Kubernetes** (via Teleport) environments.
+Supports both **local Docker** and **remote Kubernetes** environments.
 
 ## Quick Start
 
@@ -28,33 +28,9 @@ claude mcp add rails-console -s user \
 
 Find your container name with `docker ps --format '{{.Names}}'`.
 
-### Staging/Production (Kubernetes)
+### Kubernetes
 
-For Rails running in Kubernetes via Teleport:
-
-1. Login to Teleport:
-   ```sh
-   tsh login --proxy=teleport.example.com:443 teleport.example.com
-   tsh kube login your-staging-cluster
-   ```
-
-2. Find the kubectl context:
-   ```sh
-   kubectl config get-contexts -o name | grep staging
-   ```
-
-3. Add the MCP server:
-   ```sh
-   claude mcp add rails-console-staging -s user \
-     -e RAILS_MCP_MODE=kubectl \
-     -e RAILS_MCP_KUBE_CONTEXT=your-kube-context \
-     -e RAILS_MCP_KUBE_NAMESPACE=your-namespace \
-     -e RAILS_MCP_KUBE_SELECTOR=app=your-console-app \
-     -e RAILS_MCP_KUBE_CONTAINER=console \
-     -- node /path/to/rails-console-mcp/dist/index.js
-   ```
-
-**Note**: You must stay logged into Teleport for kubectl mode to work.
+For Rails running in Kubernetes, run `./setup.sh --staging` for detailed instructions.
 
 ## Usage
 
@@ -132,15 +108,6 @@ Ensure Docker daemon is running and the container exists:
 
 ```sh
 docker ps | grep web
-```
-
-### Kubectl authentication expired
-
-Re-login to Teleport:
-
-```sh
-tsh login --proxy=teleport.example.com:443 teleport.example.com
-tsh kube login your-cluster
 ```
 
 ### Timeout errors
